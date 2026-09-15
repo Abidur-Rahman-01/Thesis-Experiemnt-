@@ -42,7 +42,9 @@ To execute this architecture locally without external proprietary API bills (e.g
 
 In long-horizon trajectories ($T = 30 \to 80$ steps), context accumulation is the primary cause of Out-Of-Memory (OOM) failures:
 
-$$\text{Memory}_{\text{total}} = \text{Memory}_{\text{weights}} + \text{Memory}_{\text{KV-Cache}}(L, H, B, C) + \text{Memory}_{\text{activations}}$$
+$$
+\text{Memory}_{\text{total}} = \text{Memory}_{\text{weights}} + \text{Memory}_{\text{KV-Cache}}(L, H, B, C) + \text{Memory}_{\text{activations}}
+$$
 
 For a 7B parameter model ($L=28$ layers, $H_{\text{KV}}=8$ key-value heads, $D=128$ head dimension):
 * **Model Weights:**
@@ -50,12 +52,26 @@ For a 7B parameter model ($L=28$ layers, $H_{\text{KV}}=8$ key-value heads, $D=1
   * **At 4-bit AWQ / GPTQ:** $7 \times 10^9 \times 0.5 \text{ bytes} \approx \mathbf{3.9\text{ GB} - 4.5\text{ GB}}$.
   * **At FP8 (native to RTX 5080 Blackwell tensor cores):** $\approx \mathbf{7.2\text{ GB}}$.
 * **Paged KV Cache (FP8 Quantized KV Cache via vLLM):**
-  $$\text{KV Memory per token} = 2 \times L \times H_{\text{KV}} \times D \times 1\text{ byte (FP8)} = 2 \times 28 \times 8 \times 128 \times 1 \approx 57.34\text{ KB / token}$$
+  
+
+$$
+\text{KV Memory per token} = 2 \times L \times H_{\text{KV}} \times D \times 1\text{ byte (FP8)} = 2 \times 28 \times 8 \times 128 \times 1 \approx 57.34\text{ KB / token}
+$$
+
   * For a 32,768 ($32\text{k}$) context window: $32{,}768 \times 57.34\text{ KB} \approx \mathbf{1.88\text{ GB}}$.
   * For a 65,536 ($64\text{k}$) context window: $65{,}536 \times 57.34\text{ KB} \approx \mathbf{3.75\text{ GB}}$.
 * **Total VRAM Consumption at 64k Context:**
-  $$\text{VRAM}_{\text{total}} = 4.5\text{ GB (Weights)} + 3.75\text{ GB (64k KV)} + 1.2\text{ GB (Overhead)} \approx \mathbf{9.45\text{ GB}} \le 16\text{ GB}$$
-  $$\mathbf{\text{Safety Margin}} = 16.0\text{ GB} - 9.45\text{ GB} = \mathbf{6.55\text{ GB Headroom (Zero OOM Risk)}}.$$
+  
+
+$$
+\text{VRAM}_{\text{total}} = 4.5\text{ GB (Weights)} + 3.75\text{ GB (64k KV)} + 1.2\text{ GB (Overhead)} \approx \mathbf{9.45\text{ GB}} \le 16\text{ GB}
+$$
+
+  
+
+$$
+\mathbf{\text{Safety Margin}} = 16.0\text{ GB} - 9.45\text{ GB} = \mathbf{6.55\text{ GB Headroom (Zero OOM Risk)}}.
+$$
 
 ### 1.3 Local Training Feasibility (QLoRA + verl / CSO)
 Can you train on the 16 GB RTX 5080?
@@ -414,22 +430,37 @@ class SubTrajectorySplicer:
 
 #### Metric 1: Token-Efficiency Ratio ($\Phi_{\text{token}}$)
 Measures the average token expenditure required to achieve a verified successful resolution:
-$$\Phi_{\text{token}} = \frac{\sum_{i=1}^{N} (\text{Input Tokens}_i + \text{Output Tokens}_i)}{\sum_{i=1}^{N} \mathbb{I}(\text{Task}_i = \text{RESOLVED})}$$
+
+$$
+\Phi_{\text{token}} = \frac{\sum_{i=1}^{N} (\text{Input Tokens}_i + \text{Output Tokens}_i)}{\sum_{i=1}^{N} \mathbb{I}(\text{Task}_i = \text{RESOLVED})}
+$$
+
 *Target:* Achieve $\Phi_{\text{token}} \le 38{,}000\text{ tokens / solve}$ on SWE-bench Verified (compared to SE-Agent baseline at $\approx 110{,}000\text{ tokens / solve}$).
 
 #### Metric 2: Step-Verification Ratio ($\eta_{\text{crit}}$)
 Demonstrates empirically that expensive System 2 falsification is triggered only at critical decision forks:
-$$\eta_{\text{crit}} = \frac{\sum_{i=1}^{N} \sum_{t=1}^{T_i} \mathbb{I}(\text{Step}_{i,t} \in \text{Slow Path})}{\sum_{i=1}^{N} T_i}$$
+
+$$
+\eta_{\text{crit}} = \frac{\sum_{i=1}^{N} \sum_{t=1}^{T_i} \mathbb{I}(\text{Step}_{i,t} \in \text{Slow Path})}{\sum_{i=1}^{N} T_i}
+$$
+
 *Hypothesis:* $\eta_{\text{crit}} \in [0.14, 0.18]$, validating the theoretical finding of CSO that only ~16% of steps are critical.
 
 #### Metric 3: Attack Success Rate ($\text{ASR}_{\text{inject}}$)
 Measures the percentage of adversarial indirect prompt injection attempts that successfully trigger their payload:
-$$\text{ASR} = \frac{N_{\text{malicious actions executed}}}{N_{\text{total injection attempts}}} \times 100\%$$
+
+$$
+\text{ASR} = \frac{N_{\text{malicious actions executed}}}{N_{\text{total injection attempts}}} \times 100\%
+$$
+
 *Target:* $\text{ASR} \le 2.5\%$ on AgentDojo (baseline agents without taint firewalls exhibit $\text{ASR} \ge 68\%$).
 
 #### Metric 4: Empirical Type-I Error Rate ($\alpha_{\text{empirical}}$)
 Evaluated on POPPER DiscoveryBench: the frequency with which invalid or hallucinated scientific hypotheses are approved.
-$$\alpha_{\text{empirical}} = \frac{N(\text{False Hypothesis Accepted})}{N(\text{Total False Hypotheses})} \le \alpha_{\text{target}} = 0.05$$
+
+$$
+\alpha_{\text{empirical}} = \frac{N(\text{False Hypothesis Accepted})}{N(\text{Total False Hypotheses})} \le \alpha_{\text{target}} = 0.05
+$$
 
 ---
 
