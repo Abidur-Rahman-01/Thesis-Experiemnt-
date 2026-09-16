@@ -1,0 +1,9 @@
+hard_critical_operations:
+  - delete
+  - rm
+  - chmod
+  - chown
+  - external_post
+  - payment
+  - credential_read
+  - git_push_force

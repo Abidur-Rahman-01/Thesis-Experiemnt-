@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "veritas-research-runtime"
+version = "0.1.0"
+description = "Risk-calibrated, budget-aware verification runtime for state-mutating LLM-agent actions."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "VERITAS Research" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+veritas = "veritas.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["veritas*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,5 @@
+local_verifier:
+  model: Qwen/Qwen2.5-Coder-7B-Instruct
+  revision: pinned
+  quantization: 4bit
+  role: error_estimator_or_semantic_falsifier

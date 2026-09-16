@@ -1,0 +1,27 @@
+experiment:
+  name: veritas_paper1_dev
+  seed: 42
+  stage: dev
+
+runtime:
+  max_steps: 40
+  verification_budget: 1.0
+  checkpoint_mutations: true
+
+verification:
+  controller: rc_vov
+  budget_unit: normalized_cost
+  lambda0: 0.0
+  kappa: 1.0
+
+baselines:
+  - never
+  - always
+  - confidence
+  - risk
+  - error_x_impact
+  - mutation_only
+  - random_budget_matched
+  - bavar_style
+  - rc_vov_no_recovery
+  - rc_vov

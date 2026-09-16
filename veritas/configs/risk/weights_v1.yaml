@@ -1,0 +1,8 @@
+weights:
+  mutation: 0.22
+  irreversible: 0.20
+  privilege: 0.14
+  external: 0.16
+  secret: 0.14
+  untrusted: 0.08
+  scope: 0.06

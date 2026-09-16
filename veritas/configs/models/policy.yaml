@@ -1,0 +1,7 @@
+policy:
+  provider: provider_or_local
+  model: pinned-capable-policy
+  revision: pinned
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42

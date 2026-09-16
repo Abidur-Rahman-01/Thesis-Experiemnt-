@@ -1,0 +1,17 @@
+{
+  "default": {
+    "residual_loss": 0.35,
+    "trials": 0,
+    "notes": "Documented prior until measured recovery experiments replace it."
+  },
+  "code_edit": {
+    "residual_loss": 0.18,
+    "trials": 0,
+    "notes": "Git/file rollback is expected to be effective; must be measured before final claims."
+  },
+  "destructive_filesystem": {
+    "residual_loss": 0.65,
+    "trials": 0,
+    "notes": "High residual loss unless snapshot coverage is proven."
+  }
+}
