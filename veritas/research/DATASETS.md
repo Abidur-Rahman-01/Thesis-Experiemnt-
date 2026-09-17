@@ -30,13 +30,33 @@ AgentDojo is already vendored at `../agentdojo`. It is reserved for the post-Pap
 
 ## Manifest workflow
 
-Copy `configs/benchmarks/paper1_tasks.example.json` to a stage-specific JSON manifest. Replace the placeholder task, record the dataset revision, choose the task IDs before viewing final method performance, and set `frozen` to `true` only after review.
+Export the SWE-bench Verified metadata as JSONL, then create deterministic non-overlapping manifests. The default partition is development 40, label/train 100, calibration 80, validation 80, final test 160, and robustness 40.
+
+```powershell
+py -m pip install datasets
+$env:PYTHONPATH = "src"
+py scripts\export_swebench_metadata.py `
+  research\swebench_verified.jsonl `
+  --revision DATASET_COMMIT_OR_IMMUTABLE_REVISION
+```
+
+Use an immutable dataset revision for a final experiment. Omitting `--revision` is acceptable only while testing the infrastructure.
+
+```powershell
+$env:PYTHONPATH = "src"
+py scripts\prepare_swebench_manifests.py `
+  path\to\swebench_verified.jsonl `
+  configs\benchmarks `
+  --source-revision DATASET_COMMIT_OR_REVISION
+```
+
+The generated manifests are frozen and record the selection seed plus the SHA-256 of the source metadata. Use `--stage development=20 --stage calibration=10` for a small infrastructure smoke test; do not treat that small split as a final experimental design.
 
 Validate and preview the exact mini-SWE-agent command without downloading or spending model credits:
 
 ```bash
 PYTHONPATH=src python3 scripts/run_swebench.py \
-  --manifest configs/benchmarks/paper1_dev.json \
+  --manifest configs/benchmarks/paper1_development.json \
   --model PROVIDER/MODEL
 ```
 

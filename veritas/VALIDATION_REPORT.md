@@ -12,7 +12,7 @@ The typed action path, permission checks, impact scoring, calibration utilities,
 
 | Check | Result |
 | --- | --- |
-| Unit, integration, and end-to-end tests | Pass: 25 tests |
+| Unit, integration, and end-to-end tests | Pass: 28 tests |
 | Python source parsing | Pass: 72 Python files |
 | Bytecode compilation | Pass |
 | RC-VoV randomized invariants | Pass: 10,000 generated inputs |

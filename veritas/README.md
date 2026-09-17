@@ -34,6 +34,8 @@ The current release is a research prototype. The local checkpoint sandbox and re
 
 The repository can now launch a frozen SWE-bench slice through the vendored mini-SWE-agent and import its trajectories into the VERITAS action schema. See `research/DATASETS.md`; benchmark execution remains opt-in because it can download large Docker images and incur model cost.
 
+`scripts/prepare_swebench_manifests.py` creates deterministic, non-overlapping research partitions from exported SWE-bench metadata and records the source hash, revision, and selection seed.
+
 The demo uses a local toy filesystem sandbox. It does not call provider models, Docker, or external services.
 
 ## Main Directories
