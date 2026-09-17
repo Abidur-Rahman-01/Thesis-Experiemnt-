@@ -1,0 +1,14 @@
+{
+  "dataset": "verified",
+  "split": "test",
+  "frozen": false,
+  "source_revision": "REPLACE_WITH_DATASET_REVISION",
+  "tasks": [
+    {
+      "task_id": "REPLACE_WITH_SWEBENCH_INSTANCE_ID",
+      "repository": "REPLACE_WITH_OWNER_REPOSITORY",
+      "base_commit": null,
+      "issue": null
+    }
+  ]
+}

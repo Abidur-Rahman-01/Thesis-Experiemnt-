@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERITAS: Thesis Pre-Defense Presentation</title>
+  <!-- KaTeX CSS & JS for crisp mathematical rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #131b2e;
+      --bg-card-alt: #1a243d;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --border-color: #1e293b;
+      --border-focus: #3b82f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    header {
+      height: 48px;
+      background: rgba(11, 15, 25, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 50;
+    }
+    .header-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover {
+      background: var(--bg-card-alt);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    .btn.active {
+      background: #1e3a8a;
+      border-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    /* Presentation Workspace */
+    #workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Slide Stage */
+    #slide-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    .slide-viewport {
+      width: 100%;
+      max-width: 1100px;
+      aspect-ratio: 16 / 9;
+      min-height: 580px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      padding: 40px 50px;
+      display: none;
+      flex-direction: column;
+      position: relative;
+      overflow-y: auto;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .slide-viewport.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Presenter Notes Panel */
+    #notes-panel {
+      width: 380px;
+      background: #0f172a;
+      border-left: 1px solid var(--border-color);
+      display: none;
+      flex-direction: column;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    #notes-panel.open {
+      display: flex;
+    }
+    .notes-header {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+    }
+    .notes-content {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .notes-tip {
+      margin-top: 20px;
+      background: rgba(251, 191, 36, 0.1);
+      border-left: 3px solid var(--accent-amber);
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: #fde68a;
+    }
+
+    /* Slide Elements */
+    .slide-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+    h1.slide-title {
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    h2.slide-subtitle {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--accent-indigo);
+      margin-bottom: 24px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    ul { margin-left: 20px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+
+    /* Cards & Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 12px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .card {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .card.highlight {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(19, 27, 46, 0.8);
+    }
+    .card.danger {
+      border-color: rgba(251, 113, 133, 0.4);
+    }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-title.danger { color: var(--accent-rose); }
+    .card-title.emerald { color: var(--accent-emerald); }
+    .card-title.amber { color: var(--accent-amber); }
+
+    /* Code & Callout Blocks */
+    .equation-box {
+      background: #0f172a;
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      text-align: center;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .equation-box .caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.45;
+      margin: 12px 0;
+    }
+
+    /* Tables */
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.82rem;
+    }
+    table.custom-table th {
+      background: #1e293b;
+      color: var(--accent-blue);
+      font-weight: 600;
+      padding: 8px 12px;
+      text-align: left;
+      border: 1px solid #334155;
+    }
+    table.custom-table td {
+      padding: 8px 12px;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+    }
+    table.custom-table tr:nth-child(even) {
+      background: rgba(30, 41, 59, 0.4);
+    }
+
+    /* Bottom Bar & Progress */
+    footer {
+      height: 40px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .progress-track {
+      flex: 1;
+      max-width: 400px;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 999px;
+      margin: 0 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-indigo));
+      width: 5%;
+      transition: width 0.25s ease;
+    }
+
+    /* Printable Slide Deck */
+    @media print {
+      body { overflow: visible; height: auto; background: white; color: black; }
+      header, footer, #notes-panel, .controls { display: none !important; }
+      #workspace { display: block; overflow: visible; }
+      #slide-stage { display: block; padding: 0; }
+      .slide-viewport {
+        display: flex !important;
+        page-break-after: always;
+        width: 100% !important;
+        max-width: none !important;
+        aspect-ratio: 16 / 9;
+        margin-bottom: 20px;
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+      }
+      h1.slide-title { color: #000 !important; }
+      h2.slide-subtitle { color: #1e3a8a !important; }
+      p, li, td { color: #333 !important; }
+      .card { background: #f8fafc !important; border-color: #cbd5e1 !important; }
+      .equation-box { background: #f1f5f9 !important; border-color: #cbd5e1 !important; }
+      pre { background: #f1f5f9 !important; color: black !important; border-color: #ccc !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="header-title">VERITAS: Thesis Pre-Defense</div>
+    <div class="controls">
+      <button class="btn" id="btn-prev" onclick="prevSlide()" title="Previous (Left Arrow)">◀ Prev</button>
+      <span id="slide-indicator" style="font-size: 0.8rem; font-weight: 600; color: #fff; min-width: 60px; text-align: center;">1 / 20</span>
+      <button class="btn" id="btn-next" onclick="nextSlide()" title="Next (Right Arrow or Space)">Next ▶</button>
+      <button class="btn" id="btn-notes" onclick="toggleNotes()" title="Toggle Speaker Notes (P)">Notes [P]</button>
+      <button class="btn" onclick="toggleFullscreen()" title="Full Screen (F)">Full [F]</button>
+      <button class="btn" onclick="window.print()" title="Print / PDF">PDF</button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <main id="workspace">
+    <div id="slide-stage">
+
+      <!-- Slide 1: Title Slide -->
+      <section class="slide-viewport active" data-slide="1">
+        <div class="slide-badge">Thesis Pre-Defense</div>
+        <h1 class="slide-title" style="font-size: 2.3rem; margin-top: 10px;">VERITAS</h1>
+        <h2 class="slide-subtitle" style="font-size: 1.35rem; color: var(--accent-blue);">
+          Risk-Calibrated, Budget-Aware Verification and Counterfactual Recovery for State-Mutating LLM Agents
+        </h2>
+        <div class="grid-2" style="margin-top: 30px;">
+          <div class="card highlight">
+            <div class="card-title">Candidacy Information</div>
+            <ul style="list-style: none; margin-left: 0;">
+              <li><strong>Candidate:</strong> Abidur Rahman Sadik</li>
+              <li><strong>Program:</strong> Master's / Graduate Thesis Defense</li>
+              <li><strong>Focus Area:</strong> Trustworthy Autonomous Agents, Decision Theory & Verification</li>
+              <li><strong>Date:</strong> September 2026</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title amber">Defense Objectives</div>
+            <ul style="margin-left: 16px;">
+              <li>Establish the scientific formulation of <strong>resource-bounded verification</strong>.</li>
+              <li>Demonstrate our <strong>working prototype & invariant validation</strong>.</li>
+              <li>Detail the <strong>empirical research roadmap</strong> between pre-defense and final defense.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Context & Motivation -->
+      <section class="slide-viewport" data-slide="2">
+        <div class="slide-badge">1. Motivation</div>
+        <h1 class="slide-title">The Rise of State-Mutating Autonomous Agents</h1>
+        <h2 class="slide-subtitle">Tool-using agents do not just converse—they persistently alter digital environments</h2>
+        <p>Agents in benchmarks like <strong>SWE-bench Verified</strong> routinely modify files, execute bash scripts, install packages, and invoke APIs. However, tool operations possess radical <strong>asymmetry</strong>:</p>
+        <div class="grid-3" style="margin-top: 18px;">
+          <div class="card">
+            <div class="card-title emerald">Inspect / Passive</div>
+            <p><code>cat file.py</code>, <code>ls -la</code>, <code>grep</code></p>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
+              Deterministic zero side-effects. Safe to execute freely without compute overhead.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title">Reversible Mutation</div>
+            <p><code>git branch</code>, editing unit tests</p>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
+              Local mutations. Can be undone via local VCS checkpoints if caught early.
+            </p>
+          </div>
+          <div class="card danger">
+            <div class="card-title danger">High Impact / Irreversible</div>
+            <p><code>rm -rf</code>, <code>git push --force</code>, DB drops</p>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">
+              Severe blast radius. Permanent state corruption or credential leakage.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: The Verification Dilemma -->
+      <section class="slide-viewport" data-slide="3">
+        <div class="slide-badge">2. The Problem</div>
+        <h1 class="slide-title">The Verification Dilemma: Failure of Extremes</h1>
+        <h2 class="slide-subtitle">Why naive agent architectures fail under real-world constraints</h2>
+        <div class="grid-2" style="margin-top: 15px;">
+          <div class="card danger">
+            <div class="card-title danger">Extreme A: Never Verify (Fragile)</div>
+            <ul>
+              <li>Low inference latency and minimal token consumption.</li>
+              <li>A single erroneous edit compounds down 30+ steps.</li>
+              <li>Silent failures corrupt execution state permanently.</li>
+              <li><strong>Result:</strong> Poor overall benchmark resolution.</li>
+            </ul>
+          </div>
+          <div class="card danger">
+            <div class="card-title danger">Extreme B: Always Verify (Unusable)</div>
+            <ul>
+              <li>Reflexion / step-wise LLM judge after every single action.</li>
+              <li>Inference cost balloons <strong>3x to 10x</strong>.</li>
+              <li><strong>Verifier Noise:</strong> A 10% false alarm rate on 20 steps leads to premature run rejection.</li>
+              <li><strong>Result:</strong> Exhausts token & API budget rapidly.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="equation-box" style="margin-top: 20px;">
+          <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent-emerald);">
+            The Scientific Challenge: Given bounded compute, WHICH actions must be verified before execution?
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Research Questions -->
+      <section class="slide-viewport" data-slide="4">
+        <div class="slide-badge">3. Research Questions</div>
+        <h1 class="slide-title">Primary Research Questions & Hypotheses</h1>
+        <h2 class="slide-subtitle">A mathematically grounded, falsifiable thesis framing</h2>
+        <div class="card highlight" style="margin-bottom: 14px;">
+          <strong style="color: var(--accent-blue);">Primary Question:</strong> Under a fixed verification compute budget, can a risk-calibrated value-of-verification controller catch more consequential errors than simpler uncertainty-only, impact-only, or simple product policies?
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">RQ1: Calibration Viability</div>
+            <p style="font-size: 0.88rem;">Can step-level error probability $p_{e,t}$ be reliably calibrated in tool-use loops using held-out temperature scaling?</p>
+          </div>
+          <div class="card">
+            <div class="card-title">RQ2: Budgeted Allocation</div>
+            <p style="font-size: 0.88rem;">Does selective gating catch significantly more consequential errors per unit compute than uniform or random spend?</p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title amber">RQ3: Mandatory Falsifiable Baseline</div>
+            <p style="font-size: 0.88rem;">Does full RC-VoV beat the simple product baseline $v_t = \mathbf{1}[p_{e,t} I_t > \tau_{\text{PI}}]$ under matched compute?</p>
+          </div>
+          <div class="card">
+            <div class="card-title emerald">RQ4: Counterfactual Recovery</div>
+            <p style="font-size: 0.88rem;">Does local rollback to cryptographic checkpoints reduce recovery loss $\rho_t$ compared to restarting from step 0?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Literature Landscape -->
+      <section class="slide-viewport" data-slide="5">
+        <div class="slide-badge">4. Related Work</div>
+        <h1 class="slide-title">Literature Positioning & Competitive Landscape</h1>
+        <h2 class="slide-subtitle">Synthesizing reflection, security guardrails, and budgeted inference</h2>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Research Dimension</th>
+              <th>Reflective Agents (Reflexion, ReVISE)</th>
+              <th>Agent Security (GuardAgent, AgentDojo)</th>
+              <th>Budgeted Inference (BAVAR, Cost-MDPs)</th>
+              <th>VERITAS (This Thesis)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Action Impact Modeling</strong></td>
+              <td>❌ Uniform</td>
+              <td>⚠️ Binary filter only</td>
+              <td>❌ Synthetic task utility</td>
+              <td>✅ 7-dimensional continuous $I_t$</td>
+            </tr>
+            <tr>
+              <td><strong>Calibration of $p_{\text{error}}$</strong></td>
+              <td>❌ Uncalibrated confidence</td>
+              <td>❌ Heuristic regex / rules</td>
+              <td>❌ Assumed known</td>
+              <td>✅ Held-out temperature scaling</td>
+            </tr>
+            <tr>
+              <td><strong>Verifier Noise ($d_t, f_t$)</strong></td>
+              <td>❌ Assumed oracle</td>
+              <td>❌ Ignored false alarms</td>
+              <td>⚠️ Theoretical</td>
+              <td>✅ Empirically measured</td>
+            </tr>
+            <tr>
+              <td><strong>Recovery Modeling ($\rho_t$)</strong></td>
+              <td>❌ Step-zero restart</td>
+              <td>❌ Termination only</td>
+              <td>❌ No state rollback</td>
+              <td>✅ Transactional SHA-256 rollback</td>
+            </tr>
+            <tr>
+              <td><strong>Resource Budget Bounds</strong></td>
+              <td>❌ Unbounded spend</td>
+              <td>❌ Unbounded spend</td>
+              <td>✅ Theoretical budget</td>
+              <td>✅ Dynamic marginal utility gate</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Slide 6: End-to-End System Architecture -->
+      <section class="slide-viewport" data-slide="6">
+        <div class="slide-badge">5. Architecture</div>
+        <h1 class="slide-title">End-to-End System Architecture</h1>
+        <h2 class="slide-subtitle">The 7-stage VERITAS runtime pipeline</h2>
+        <pre>
+ ┌──────────────────────────────────────────────┐
+ │     1. Competent Policy Model (Frontier)     │ Proposes candidate action a_t
+ └──────────────────────┬───────────────────────┘
+                        ▼
+ ┌──────────────────────────────────────────────┐
+ │ 2. Action Contract & Permission Boundary     │ Validates schemas, path traversal, permissions
+ └──────────────────────┬───────────────────────┘
+                        ▼
+ ┌──────────────────────────────────────────────┐
+ │ 3. Risk Calibration & Feature Estimation     │ Computes calibrated p_{e,t}, impact I_t, loads (d_t, f_t, rho_t)
+ └──────────────────────┬───────────────────────┘
+                        ▼
+ ┌──────────────────────────────────────────────┐
+ │ 4. RC-VoV Dynamic Budget Controller          │ Computes expected value Delta_t and marginal utility m_t >= lambda_t
+ └──────────────┬────────────────────────┬──────┘
+                │ VERIFY                 │ SKIP
+                ▼                        │
+ ┌─────────────────────────────┐         │
+ │ 5. Action Falsification     │         │
+ │    (Deterministic + Sem.)   │         │
+ └──────────────┬──────────────┘         │
+                │ Pass                   │
+                ▼                        ▼
+ ┌──────────────────────────────────────────────┐
+ │ 6. Checkpointed Execution & Recovery Engine  │ Snapshot hash -> Execute in sandbox -> Catch fail & rollback
+ └──────────────────────┬───────────────────────┘
+                        ▼
+ ┌──────────────────────────────────────────────┐
+ │ 7. JSONL Trajectory & Event Store            │ Records complete features, decisions, and costs for offline replay
+ └──────────────────────────────────────────────┘</pre>
+      </section>
+
+      <!-- Slide 7: Action Contracts & Impact Vector -->
+      <section class="slide-viewport" data-slide="7">
+        <div class="slide-badge">6. Architecture Deep Dive</div>
+        <h1 class="slide-title">Typed Action Contracts & Impact Scoring</h1>
+        <h2 class="slide-subtitle">Moving beyond raw strings to typed, verifiable contracts</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">1. The ActionContract Schema</div>
+            <p style="font-size: 0.85rem;">Every tool action is encapsulated with execution metadata:</p>
+            <pre style="margin-top: 6px;"><code>@dataclass(frozen=True)
+class ActionContract:
+    action_id: str
+    action_class: ActionClass
+    operation: str
+    arguments: dict
+    mutates_state: bool
+    is_reversible: bool
+    requires_checkpoint: bool</code></pre>
+          </div>
+          <div class="card">
+            <div class="card-title">2. Multi-Dimensional Impact ($I_t$)</div>
+            <p style="font-size: 0.85rem;">Normalized feature vector $x_t \in [0, 1]^7$:</p>
+            <ul style="font-size: 0.8rem; margin-top: 6px;">
+              <li><strong>mutation:</strong> modifies persistent state?</li>
+              <li><strong>irreversibility:</strong> can state be restored?</li>
+              <li><strong>privilege:</strong> requires root / elevated privileges?</li>
+              <li><strong>external:</strong> outside sandbox blast radius?</li>
+              <li><strong>secret:</strong> touches credentials / env vars?</li>
+              <li><strong>scope:</strong> affects multiple directories?</li>
+            </ul>
+            <div class="equation-box" style="padding: 6px; margin-top: 8px;">
+              $$I_t = \operatorname{clip}(w^\top x_t, 0, 1)$$
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: The Mathematical Core - RC-VoV -->
+      <section class="slide-viewport" data-slide="8">
+        <div class="slide-badge">7. Mathematical Core</div>
+        <h1 class="slide-title">Risk-Calibrated Value-of-Verification (RC-VoV)</h1>
+        <h2 class="slide-subtitle">Decision-theoretic derivation of expected verification benefit</h2>
+        <p style="font-size: 0.88rem;">We compare expected future loss under both execution pathways:</p>
+        <div class="grid-2" style="margin-top: 10px;">
+          <div class="card">
+            <div class="card-title">Loss Without Verification</div>
+            <div class="equation-box">
+              $$L_t^{\text{no-verify}} = p_{e,t} I_t$$
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Product of calibrated error probability and action impact.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Loss With Verification</div>
+            <div class="equation-box">
+              $$L_t^{\text{verify}} = C_{v,t} + p_{e,t}[(1 - d_t)I_t + d_t \rho_t I_t] + (1 - p_{e,t})f_t C_{fp,t}$$
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Verification cost + missed error loss + recovered loss + false alarm penalty.</p>
+          </div>
+        </div>
+        <div class="equation-box" style="margin-top: 16px; border-color: var(--accent-blue);">
+          <div style="font-size: 1.15rem; font-weight: 700; color: #fff;">
+            $$\boxed{\Delta_t = p_{e,t} d_t (1 - \rho_t) I_t - C_{v,t} - (1 - p_{e,t}) f_t C_{fp,t}}$$
+          </div>
+          <div class="caption">Net Value of Verification = Avoided Consequential Loss − Verification Cost − False Alarm Penalty</div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Budget Controller & Mandatory Baselines -->
+      <section class="slide-viewport" data-slide="9">
+        <div class="slide-badge">8. Control Policy</div>
+        <h1 class="slide-title">Dynamic Budget Controller & Mandatory Baselines</h1>
+        <h2 class="slide-subtitle">Adaptive thresholding under hard compute bounds</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Dynamic Marginal Utility Gate</div>
+            <p style="font-size: 0.85rem;">Given remaining budget $B_t$ and initial budget $B_0$:</p>
+            <div class="equation-box">
+              $$m_t = \frac{\max(\Delta_t, 0)}{C_{v,t} + \epsilon}, \quad \lambda_t = \lambda_0 \left[1 + \kappa \left(1 - \frac{B_t}{B_0}\right)\right]$$
+            </div>
+            <p style="font-size: 0.82rem;">Decision: Verify if $\text{hard-critical}_t \lor (m_t \ge \lambda_t \land \Delta_t > 0)$.</p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title amber">The Mandatory Falsifiable Baselines</div>
+            <p style="font-size: 0.85rem;">RC-VoV must beat these at <strong>equal compute spend</strong>:</p>
+            <ul style="font-size: 0.82rem; margin-top: 8px;">
+              <li><strong>$p_e \times I$ Baseline:</strong> $v_t = \mathbf{1}[p_{e,t} I_t > \tau_{\text{PI}}]$</li>
+              <li><strong>BAVAR-Style Baseline:</strong> Expected value without rollback recovery.</li>
+              <li><strong>Confidence-Only Baseline:</strong> $v_t = \mathbf{1}[p_{e,t} > \tau]$.</li>
+              <li><strong>Random Budget-Matched:</strong> Randomly selects until budget exhausted.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Checkpoint & Counterfactual Recovery -->
+      <section class="slide-viewport" data-slide="10">
+        <div class="slide-badge">9. Architecture Deep Dive</div>
+        <h1 class="slide-title">Checkpointing & Counterfactual Recovery</h1>
+        <h2 class="slide-subtitle">Transactional state restoration without cold restarts</h2>
+        <pre>
+       Step t-1                     Step t (Proposed Action)                   Step t+1
+   [ Verified State ] ───► [ Take Workspace Snapshot (SHA-256) ]
+                                         │
+                                         ▼ Execute in Sandbox
+                                [ Action Evaluation ]
+                                   ├── Success ──► Advance trajectory to t+1
+                                   └── Falsified / Execution Error
+                                         │
+                                         ▼
+                            [ Transactional Rollback ]
+                                         │
+                            Revert filesystem to SHA-256 digest
+                                         │
+                                         ▼
+                         [ Counterfactual Continuation ]
+                            Prompt policy for alternative a'_t</pre>
+        <div class="card" style="margin-top: 10px;">
+          <strong style="color: var(--accent-emerald);">Why this matters for $\rho_t$:</strong> When an action fails, cold-restarting discards all prior valid reasoning. Checkpoint recovery restores state in milliseconds, minimizing recovery loss $\rho_t$.
+        </div>
+      </section>
+
+      <!-- Slide 11: Work Completed So Far - Prototype -->
+      <section class="slide-viewport" data-slide="11">
+        <div class="slide-badge">10. Current Progress</div>
+        <h1 class="slide-title">Work Completed So Far: Working Prototype</h1>
+        <h2 class="slide-subtitle">A fully implemented, platform-neutral research prototype</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title emerald">Prototype Implementation</div>
+            <ul style="font-size: 0.85rem;">
+              <li><strong>72 Python modules</strong> in <code>veritas/src/veritas</code>.</li>
+              <li>Pure platform-neutral design (POSIX & Windows compatible).</li>
+              <li>Full <code>ActionContract</code>, schemas, and permission engine.</li>
+              <li>Temperature scaling calibrator & ECE / Brier metrics.</li>
+              <li>Local transactional checkpoint / restore manager.</li>
+              <li>6 scheduler baselines & offline replay engine.</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <div class="card-title">Automated Validation Certification</div>
+            <table class="custom-table" style="margin: 0; font-size: 0.78rem;">
+              <tr><th>Check</th><th>Result</th></tr>
+              <tr><td>Unit & Integration Tests</td><td><strong>PASS (21/21)</strong></td></tr>
+              <tr><td>RC-VoV Invariants (Fuzzing)</td><td><strong>PASS (10,000 runs)</strong></td></tr>
+              <tr><td>Tampered Checkpoint Rejection</td><td><strong>PASS</strong></td></tr>
+              <tr><td>Path Traversal Security Check</td><td><strong>PASS</strong></td></tr>
+              <tr><td>Toy Trajectory Budget Sweep</td><td><strong>PASS</strong></td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Offline Replay Architecture -->
+      <section class="slide-viewport" data-slide="12">
+        <div class="slide-badge">11. Architecture Deep Dive</div>
+        <h1 class="slide-title">Architecture Deep Dive: Offline Matched Replay</h1>
+        <h2 class="slide-subtitle">Evaluating 10 schedulers fairly without million-dollar inference bills</h2>
+        <pre>
+   [ Single Logging Pass ] ──► [ actions.jsonl ] ──► [ Matched-Budget Replay Engine ]
+    Run frontier model once    Contains:              Simulates Schedulers across budgets:
+    over benchmark tasks       • Context & Action     • Budget B in {0.05, 0.1, 0.25, 0.5, 1.0}
+                               • Logits & Calibrated p_e
+                               • Impact I_t           ──► Produces Allocation Curves:
+                               • Verifier verdict         Consequential Errors Caught vs
+                               • Ground-truth label Y_t   Verification Compute Spent</pre>
+        <div class="card" style="margin-top: 14px;">
+          <strong style="color: var(--accent-blue);">Research Advantage:</strong> Because all schedulers are evaluated on the <em>exact same logged action decisions</em>, scheduler comparisons have zero run-to-run policy variance!
+        </div>
+      </section>
+
+      <!-- Slide 13: What I Am Going To Do - Overview -->
+      <section class="slide-viewport" data-slide="13">
+        <div class="slide-badge">12. Research Roadmap</div>
+        <h1 class="slide-title">What I Am Going to Do: Empirical Roadmap</h1>
+        <h2 class="slide-subtitle">A disciplined, 5-phase research campaign towards final defense</h2>
+        <div class="grid-3" style="margin-top: 20px;">
+          <div class="card">
+            <div class="card-title">Phases 1 & 2</div>
+            <p><strong>Environment & Benchmark</strong></p>
+            <p style="font-size: 0.82rem; margin-top: 6px; color: var(--text-muted);">
+              RTX 5080 vLLM serving, hardened Docker container isolation, and SWE-bench Verified manifest freeze.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title emerald">Phases 3 & 4</div>
+            <p><strong>Calibration & Replay</strong></p>
+            <p style="font-size: 0.82rem; margin-top: 6px; color: var(--text-muted);">
+              Held-out temperature scaling, empirical $(d_t, f_t, \rho_t)$ estimation, and matched-budget replay sweeps.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title amber">Phase 5</div>
+            <p><strong>Online Validation</strong></p>
+            <p style="font-size: 0.82rem; margin-top: 6px; color: var(--text-muted);">
+              Controlled recovery study, statistical power pilot, and online evaluation of Top-3 policies.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 14: Phase 1 & 2 Infrastructure Setup -->
+      <section class="slide-viewport" data-slide="14">
+        <div class="slide-badge">13. Roadmap: Phases 1 & 2</div>
+        <h1 class="slide-title">Phase 1 & 2: Infrastructure & Data Manifest</h1>
+        <h2 class="slide-subtitle">Hardware validation, sandboxing, and non-circular data hygiene</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Phase 1: Local RTX 5080 & Docker</div>
+            <ul style="font-size: 0.85rem;">
+              <li><strong>Local Verifier:</strong> Deploy Qwen2.5-Coder-7B / Llama-3.1-8B via vLLM on RTX 5080 (16 GB).</li>
+              <li><strong>VRAM Safeguard:</strong> Enforce operational limit:
+                $$M_{\text{peak}} \le 0.90 \times M_{\text{VRAM}} \quad (\le 14.4\text{ GB})$$</li>
+              <li><strong>Docker Sandbox:</strong> Zero network by default, strict memory (4 GB) and execution timeouts.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Phase 2: SWE-bench Verified Trajectories</div>
+            <ul style="font-size: 0.85rem;">
+              <li>Curate 150 tasks from <strong>SWE-bench Verified</strong> with high mutation rates.</li>
+              <li>Use capable frontier policy (Claude 3.5 / GPT-4o) to generate realistic trajectories.</li>
+              <li><strong>Dual-Annotator Ground Truth:</strong> Record ground-truth labels $Y_t \in \{0, 1\}$ independently without circular verifier dependence.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Phase 3 Calibration & Empirical Estimation -->
+      <section class="slide-viewport" data-slide="15">
+        <div class="slide-badge">14. Roadmap: Phase 3</div>
+        <h1 class="slide-title">Phase 3: Calibration & Empirical Statistics</h1>
+        <h2 class="slide-subtitle">Estimating parameters empirically rather than assuming them</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">1. Held-Out Temperature Scaling</div>
+            <p style="font-size: 0.82rem;">Fit optimal $T^*$ by minimizing NLL on frozen calibration split ($N_{\text{cal}} \ge 300$):</p>
+            <div class="equation-box" style="padding: 6px;">
+              $$T^* = \operatorname*{arg\,min}_{T > 0} -\sum_{i=1}^{N_{\text{cal}}} [y_i \log \sigma(z_i/T) + (1 - y_i)\log(1 - \sigma(z_i/T))]$$
+            </div>
+            <p style="font-size: 0.82rem;">Report Expected Calibration Error (ECE) and Brier Score.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">2. Class-Level Verifier & Recovery Tables</div>
+            <p style="font-size: 0.82rem;">Measure empirical characteristics per action class:</p>
+            <ul style="font-size: 0.8rem; margin-top: 6px;">
+              <li><strong>Detection Power ($d_t$):</strong> TPR on labeled buggy actions.</li>
+              <li><strong>False Alarm Rate ($f_t$):</strong> FPR on valid actions.</li>
+              <li><strong>Residual Loss ($\rho_t$):</strong> Measured task loss after rollback and branch continuation:
+                $$\rho_t = 1 - \frac{\text{Success Rate}_{\text{after rollback}}}{\text{Success Rate}_{\text{clean}}}$$</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 16: Phase 4 Matched Replay & The Stop Rule -->
+      <section class="slide-viewport" data-slide="16">
+        <div class="slide-badge">15. Roadmap: Phase 4</div>
+        <h1 class="slide-title">Phase 4: Matched-Budget Replay & The Stop Rule</h1>
+        <h2 class="slide-subtitle">Testing the core hypothesis across verification budget tiers</h2>
+        <div class="equation-box" style="margin-bottom: 12px;">
+          <div style="font-size: 1.05rem; font-weight: 700; color: var(--accent-blue);">
+            Sweep Budgets $\mathcal{B} \in \{0\%, 10\%, 25\%, 50\%, 75\%, 100\%\}$ across All Schedulers
+          </div>
+          <div class="caption">Measure Consequential Errors Caught per Verification Compute Token</div>
+        </div>
+        <div class="card danger">
+          <div class="card-title danger">The Pre-Registered Scientific Stop Rule</div>
+          <p style="font-size: 0.88rem;">
+            If RC-VoV does not achieve statistically significant higher allocation efficiency than the simple product baseline $p_{e,t} I_t$ on held-out replay:
+          </p>
+          <ul style="font-size: 0.85rem; margin-top: 8px;">
+            <li>We will <strong>simplify the controller</strong> down to $p_e \times I$ rather than adding ungrounded complexity.</li>
+            <li>We will report this transparently as a scientific finding: <em>impact and uncertainty dominate verifier noise in practice</em>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 17: Phase 5 Controlled Recovery & Online Evaluation -->
+      <section class="slide-viewport" data-slide="17">
+        <div class="slide-badge">16. Roadmap: Phase 5</div>
+        <h1 class="slide-title">Phase 5: Recovery Ablation & Online Evaluation</h1>
+        <h2 class="slide-subtitle">Validating counterfactual recovery and end-to-end task success</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title emerald">Controlled Recovery Experiment</div>
+            <p style="font-size: 0.85rem;">Compare 3 recovery conditions on identical errors:</p>
+            <ul style="font-size: 0.82rem; margin-top: 6px;">
+              <li><strong>Cond A (Blind):</strong> Continue through error without rollback.</li>
+              <li><strong>Cond B (Restart):</strong> Abort and restart from step 0.</li>
+              <li><strong>Cond C (VERITAS):</strong> Rollback to SHA-256 snapshot and branch.</li>
+            </ul>
+            <p style="font-size: 0.82rem; color: var(--accent-emerald); margin-top: 6px;">
+              Hypothesis: Cond C preserves &gt;70% inference tokens while matching task success.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title">Power Analysis & Online Validation</div>
+            <ul style="font-size: 0.82rem;">
+              <li>Execute 30-task pilot to measure empirical effect size $\delta$ and variance $\sigma^2$.</li>
+              <li>Calculate minimum sample size $N$ for $80\%$ statistical power ($\alpha = 0.05$).</li>
+              <li>Deploy <strong>Top-3 Schedulers</strong> online to measure real-world task resolution vs overall inference spend.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 18: Research Timeline & Milestones -->
+      <section class="slide-viewport" data-slide="18">
+        <div class="slide-badge">17. Timeline & Milestones</div>
+        <h1 class="slide-title">Thesis Execution Timeline to Final Defense</h1>
+        <h2 class="slide-subtitle">Phased execution schedule from September 2026 to February 2027</h2>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Milestone</th>
+              <th>Deliverable / Focus Area</th>
+              <th>Target Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>M0 (Pre-Defense)</strong></td>
+              <td>Theoretical formulation, 72-file prototype, invariant test suite</td>
+              <td>Sept 2026</td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">COMPLETED</span></td>
+            </tr>
+            <tr>
+              <td><strong>M1 (Infra & Data)</strong></td>
+              <td>Docker sandbox, RTX 5080 vLLM serving, SWE-bench manifest</td>
+              <td>Oct 2026</td>
+              <td><span style="color: var(--accent-amber); font-weight: 600;">IN PROGRESS</span></td>
+            </tr>
+            <tr>
+              <td><strong>M2 (Calibration)</strong></td>
+              <td>Trajectory logging, ground truth labeling, temperature calibration</td>
+              <td>Nov 2026</td>
+              <td>Planned</td>
+            </tr>
+            <tr>
+              <td><strong>M3 (Replay Sweeps)</strong></td>
+              <td>Matched-budget replay sweep & stop rule evaluation</td>
+              <td>Dec 2026</td>
+              <td>Planned</td>
+            </tr>
+            <tr>
+              <td><strong>M4 (Recovery & Pilot)</strong></td>
+              <td>Controlled recovery experiment & statistical power pilot</td>
+              <td>Jan 2027</td>
+              <td>Planned</td>
+            </tr>
+            <tr>
+              <td><strong>M5 (Final Defense)</strong></td>
+              <td>Online benchmark, thesis dissertation & open-source release</td>
+              <td>Feb 2027</td>
+              <td>Planned</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Slide 19: Risk Analysis & Mitigation -->
+      <section class="slide-viewport" data-slide="19">
+        <div class="slide-badge">18. Risk Management</div>
+        <h1 class="slide-title">Risk Analysis & Scientific Mitigation Strategies</h1>
+        <h2 class="slide-subtitle">Anticipating challenges and ensuring research integrity</h2>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Identified Risk</th>
+              <th>Impact</th>
+              <th>Mitigation Strategy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>$p_e \times I$ matches RC-VoV</strong></td>
+              <td>High</td>
+              <td>Embrace as valid scientific result; document that impact and uncertainty dominate verifier noise; simplify controller.</td>
+            </tr>
+            <tr>
+              <td><strong>RTX 5080 VRAM OOM</strong></td>
+              <td>Medium</td>
+              <td>Use quantized 8-bit/4-bit local verifiers; offload policy model to external API; enforce strict $M_{\text{peak}} \le 0.90 V_{\text{RAM}}$.</td>
+            </tr>
+            <tr>
+              <td><strong>Low Benchmark Error Density</strong></td>
+              <td>Medium</td>
+              <td>Filter SWE-bench Verified tasks to prioritize repositories with multi-file edits and active test suites.</td>
+            </tr>
+            <tr>
+              <td><strong>Circular Ground Truth</strong></td>
+              <td>High</td>
+              <td>Strictly isolate test suite assertion labels from model execution logs; use independent human review on discordant cases.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Slide 20: Summary & Expected Contributions -->
+      <section class="slide-viewport" data-slide="20">
+        <div class="slide-badge">19. Summary</div>
+        <h1 class="slide-title">Summary of Expected Contributions</h1>
+        <h2 class="slide-subtitle">Principled, efficient, and trustworthy autonomous agent execution</h2>
+        <div class="grid-3" style="margin-top: 24px;">
+          <div class="card highlight">
+            <div class="card-title">1. Theoretical</div>
+            <p style="font-size: 0.88rem;">
+              First decision-theoretic formulation integrating calibrated error probability, action impact, verifier sensitivity, and recovery under strict compute budgets.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title emerald">2. Empirical</div>
+            <p style="font-size: 0.88rem;">
+              First rigorous, matched-budget study comparing selective verification against the mandatory $p_e \times I$ baseline, with controlled counterfactual recovery.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title amber">3. Practical</div>
+            <p style="font-size: 0.88rem;">
+              Tested, platform-neutral open-source agent runtime featuring typed contracts, transactional rollback, and complete offline replay capabilities.
+            </p>
+          </div>
+        </div>
+        <div class="equation-box" style="margin-top: 30px;">
+          <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">
+            Thank you! I welcome your questions and committee feedback.
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Presenter Notes Sidebar -->
+    <aside id="notes-panel">
+      <div class="notes-header">
+        <span>Presenter Notes</span>
+        <span id="notes-timer">00:00</span>
+      </div>
+      <div class="notes-content" id="notes-body">
+        Select a slide to view speaker notes.
+      </div>
+      <div class="notes-tip" id="notes-tip">
+        <strong>Committee Strategy:</strong> Emphasize the falsifiable stop rule and that our prototype is already certified on 10,000 randomized invariants.
+      </div>
+    </aside>
+  </main>
+
+  <!-- Bottom Bar -->
+  <footer>
+    <div>Candidate: Abidur Rahman Sadik</div>
+    <div class="progress-track">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div>Thesis Pre-Defense: VERITAS</div>
+  </footer>
+
+  <script>
+    const speakerNotes = {
+      1: "Respected members of the committee, welcome to my thesis pre-defense. Today I present VERITAS: Risk-Calibrated, Budget-Aware Verification and Counterfactual Recovery for State-Mutating LLM Agents. In this presentation, I will establish the core theoretical problem of resource-bounded agent verification, present our end-to-end architecture, review our working prototype and property validation, and outline the rigorous empirical campaign I will execute between today's pre-defense and the final thesis defense.",
+      2: "To motivate our work, look at modern autonomous software agents. When an agent acts in a real repository, steps are fundamentally asymmetric. Reading a file has zero persistent consequence. Modifying a test file has local, reversible impact. But running a destructive bash command or pushing broken code can permanently corrupt state. Today's systems either verify indiscriminately or fail silently because they treat all steps as equals.",
+      3: "This creates a scientific dilemma. A naive agent that never verifies is fast and cheap, but brittle—a single wrong edit can derail a 30-step trajectory. Conversely, existing reflective architectures like Reflexion or step-level LLM judges verify almost every step. That is computationally prohibitive: it triples or quintuples inference cost and introduces verifier errors. If a verifier has a 10% false alarm rate, verifying 20 steps almost guarantees a valid trajectory gets prematurely killed. We need selective verification.",
+      4: "Here are the research questions defining my thesis. Notice RQ3 in particular: this is our pre-registered falsification criterion. If our full decision-theoretic formulation cannot beat a simple product of calibrated error probability times action impact, then the extra mathematical complexity is unjustified. This ensures our thesis makes a genuine scientific claim rather than building an elaborate engineering wrapper.",
+      5: "We position VERITAS at the intersection of three active subfields: reflective self-correction (like Reflexion), agent security guardrails (like GuardAgent and AgentDojo), and budget-aware reasoning (like BAVAR). While prior work solves pieces of this puzzle, none combine calibrated error probability, multidimensional action impact, empirical verifier sensitivity, and rollback recovery value into a single, resource-bounded control policy.",
+      6: "This is the end-to-end architecture of VERITAS. The runtime operates as a 7-stage pipeline: First, the policy proposes a typed action. Second, the action contract and permission boundary deterministically validate parameters. Third, the risk and calibration engine estimates calibrated error probability and multi-attribute impact. Fourth, the RC-VoV controller decides whether to verify or skip based on remaining budget. Fifth, if verified, falsification tests are executed. Sixth, mutating actions are executed with transactional checkpoint rollback. Finally, complete decision records are logged for offline matched-budget replay.",
+      7: "Let's look deeper into the contract and impact layer. In traditional agents, tool use is just raw strings passed to a bash subprocess. In VERITAS, every action is an ActionContract with explicit schemas and rollback declarations. The impact model calculates an impact score between 0 and 1 across seven explicit dimensions: mutation, irreversibility, privilege level, external side-effects, secret exposure, untrusted data flow, and blast-radius scope. Furthermore, hard-critical operations like deleting directories or credential access immediately force verification, regardless of what the model estimates.",
+      8: "Slide 8 is the theoretical core of the thesis. Let's analyze the RC-VoV equation term by term. The first term is the expected avoided loss: error probability p_{e,t} times verifier sensitivity d_t, times recovery effectiveness (1 - rho_t), times impact I_t. If an error cannot be recovered—meaning rho_t = 1—the avoided loss is zero, so verification is pointless! The second term is the direct compute cost of verification C_{v,t}. The third term is the expected penalty of a false alarm: the probability the action was correct, times false rejection rate f_t, times false positive cost C_{fp,t}. Verification is only selected if Delta_t > 0.",
+      9: "To enforce a hard compute budget, we evaluate the marginal value per unit verification cost. The controller dynamically raises the acceptance threshold lambda as the budget burns down. Most importantly, we establish the mandatory p_e x I baseline. Prior literature often compared complex systems against naive 'always-verify' or random baselines. In VERITAS, our primary comparison is against a calibrated error probability multiplied by action impact. If our full RC-VoV formulation cannot beat this simple product, we will simplify our decision rule.",
+      10: "Slide 10 presents our checkpoint and recovery architecture. Traditional agents have no transactional memory: if a tool causes a fatal syntax error or corrupts a configuration 15 steps into a task, the agent either wanders blindly or restarts from step zero, burning 15 steps of compute. In VERITAS, whenever a state-mutating action is scheduled, the runtime takes a lightweight workspace snapshot validated by SHA-256 hashes. If the action is falsified or fails during execution, we perform a clean rollback to the nearest safe checkpoint and prompt for an alternative action branch.",
+      11: "I am pleased to report that the foundational architecture is not just a concept—it is a working, tested prototype. As certified in our validation report, the repository contains 72 Python modules covering contracts, calibration, the RC-VoV solver, checkpoint management, and offline replay. Our test suite passes all 21 unit and integration tests, as well as 10,000 randomized property-based invariant checks testing edge cases in the mathematical equations.",
+      12: "Slide 12 explains our offline replay architecture, which solves the high financial and compute cost of evaluating multiple agent schedulers. Running 500 SWE-bench tasks across 8 schedulers online would cost tens of thousands of dollars and weeks of GPU time. Instead, we execute one comprehensive logging pass with our policy model, capturing rich action records. We then feed these identical logged decisions through our replay engine across different budget tiers, comparing exactly which actions each scheduler chooses to verify.",
+      13: "Now, let us turn to the heart of the pre-defense: What I am going to do between now and the final defense. I have broken down the remaining work into five disciplined phases: Phase 1 validates the local hardware compute stack and Docker isolation. Phase 2 gathers trajectories from SWE-bench Verified. Phase 3 performs rigorous empirical calibration. Phase 4 runs our matched-budget replay sweeps to test our core hypothesis. Phase 5 executes the final power-sized online evaluation.",
+      14: "In Phase 1, we validate our local compute environment. We utilize our RTX 5080 GPU for the local verifier model while enforcing a strict memory limit of 90% peak VRAM. We also complete the Docker sandbox to isolate tool execution. In Phase 2, we decouple the policy model from the verifier: we use a frontier policy on a curated subset of SWE-bench Verified. This guarantees that the agent actually makes meaningful progress and generates realistic error distributions rather than failing at step 1.",
+      15: "Phase 3 addresses a critical scientific gap in prior agent literature. Many papers plug hypothetical constants into decision equations. In VERITAS, every parameter is empirically grounded. We fit temperature scaling on a held-out calibration split to guarantee that when the model outputs a 40% error probability, it truly means 40%. Furthermore, detection rate d, false alarm rate f, and recovery factor rho are computed directly from held-out trials across each action class.",
+      16: "Phase 4 is where we test our core hypothesis. We plot allocation curves across budget tiers from 0 to 100 percent. Our primary metric is consequential errors caught per unit verification compute. We have formally pre-registered a stop rule: if RC-VoV cannot statistically beat the simple product baseline p_e x I, we will not hide the negative result. We will simplify the controller and document why the higher-order terms collapsed. This scientific rigor protects the integrity of the thesis.",
+      17: "In Phase 5, we execute two critical experiments. First, a controlled counterfactual recovery ablation: we compare checkpoint rollback against cold restarting and blind continuation, measuring token savings and task preservation. Second, rather than picking an arbitrary number of benchmark tasks, we run a 30-task pilot to conduct a formal statistical power analysis. This determines the exact sample size needed to detect significant differences in online task success and verification cost.",
+      18: "Here is our project timeline leading to the final defense. Milestone 0 is fully complete: the architecture, prototype, and invariant test suite are validated. Over the next two months, we complete the Docker sandbox and gather trajectories. By December, empirical calibration and the offline replay sweeps will be concluded. In early 2027, we run the controlled recovery study and online evaluation, leading directly into final thesis writeup and defense.",
+      19: "Every strong research proposal must account for risk. The largest scientific risk is that the simple product baseline p_e x I matches our full RC-VoV formulation. If that happens, it is not a project failure—it is an important scientific finding demonstrating that impact and uncertainty dominate verifier noise in practical agent loops. On the engineering side, we mitigate GPU memory risks through quantized local verifiers and API-based policy decoupling, and we prevent circular ground truth by keeping evaluation labels independent of verifier outputs.",
+      20: "In conclusion, VERITAS provides a principled, falsifiable framework for making autonomous LLM agents trustworthy without rendering them prohibitively expensive. We have built the working foundation, verified its architectural integrity, and established an empirical roadmap designed to answer our research questions rigorously. Thank you for your time and guidance. I welcome your questions and feedback."
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 20;
+    let timerSeconds = 0;
+    let timerInterval = null;
+
+    function updateSlide() {
+      document.querySelectorAll('.slide-viewport').forEach(el => {
+        el.classList.remove('active');
+      });
+      const activeEl = document.querySelector(`.slide-viewport[data-slide="${currentSlide}"]`);
+      if (activeEl) {
+        activeEl.classList.add('active');
+        activeEl.scrollTop = 0;
+      }
+      document.getElementById('slide-indicator').innerText = `${currentSlide} / ${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      document.getElementById('notes-body').innerText = speakerNotes[currentSlide] || "No notes for this slide.";
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleNotes() {
+      const panel = document.getElementById('notes-panel');
+      const btn = document.getElementById('btn-notes');
+      panel.classList.toggle('open');
+      btn.classList.toggle('active');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'p' || e.key === 'P') {
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      } else if (e.key === 'Home') {
+        currentSlide = 1;
+        updateSlide();
+      } else if (e.key === 'End') {
+        currentSlide = totalSlides;
+        updateSlide();
+      }
+    });
+
+    // Presenter Timer
+    timerInterval = setInterval(() => {
+      timerSeconds++;
+      const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const secs = String(timerSeconds % 60).padStart(2, '0');
+      document.getElementById('notes-timer').innerText = `${mins}:${secs}`;
+    }, 1000);
+
+    // Initial render
+    updateSlide();
+  </script>
+</body>
+</html>

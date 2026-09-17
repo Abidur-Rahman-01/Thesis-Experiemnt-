@@ -12,7 +12,7 @@ The typed action path, permission checks, impact scoring, calibration utilities,
 
 | Check | Result |
 | --- | --- |
-| Unit, integration, and end-to-end tests | Pass: 21 tests |
+| Unit, integration, and end-to-end tests | Pass: 25 tests |
 | Python source parsing | Pass: 72 Python files |
 | Bytecode compilation | Pass |
 | RC-VoV randomized invariants | Pass: 10,000 generated inputs |
@@ -41,7 +41,7 @@ These checks were executed on the development host. Native Windows, Docker Deskt
 | Verifier/recovery statistics | Scaffolded | Configuration values have zero observations/trials and must not support research claims yet. |
 | Docker sandbox | Missing | `DockerSandbox` is an explicit unavailable stub; Compose currently provides PostgreSQL only. |
 | Real policy/provider model | Missing | Only scripted policy and heuristic estimators/verifiers exist. |
-| SWE-bench Verified runner | Missing | Manifest loader exists, but the task list is empty and there is no executable benchmark adapter. |
+| SWE-bench Verified runner | Adapter implemented; data pending | A frozen JSON manifest can launch the vendored mini-SWE-agent in Docker and its trajectories can be imported into VERITAS. The real task list is still empty and no benchmark run has been completed. |
 | PostgreSQL | Optional stub | JSONL is the active equivalent store; PostgreSQL adapter is not implemented. |
 | Frozen dependencies | Missing | No `uv.lock`; model revisions are placeholders. |
 | Empirical datasets/results | Missing | No labeled action dataset, measured verifier statistics, recovery trials, budget curves, or online results. |
@@ -72,7 +72,7 @@ For the RTX 5080 phase, record `nvidia-smi`, Python, PyTorch/CUDA, Docker, model
 1. Implement and test the Docker sandbox with no network by default, CPU/RAM/time/output limits, and disposable workspaces.
 2. Pin the Windows/Linux Python, model, CUDA, and inference dependencies and generate a lock file.
 3. Integrate a competent primary policy and local verifier, then pass the policy viability gate.
-4. Freeze a non-empty SWE-bench Verified task manifest and run reproducible development trajectories.
+4. Freeze a non-empty SWE-bench Verified task manifest and use the mini-SWE-agent bridge to run reproducible development trajectories.
 5. Create adjudicated action labels without using execution success or verifier output as circular semantic ground truth.
 6. Estimate calibration, class-level verifier statistics, and recovery statistics from held-out data with sample counts and uncertainty intervals.
 7. Add missing logging fields and distinguish environment/tool failures from semantic action failures.

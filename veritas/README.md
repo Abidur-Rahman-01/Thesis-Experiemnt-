@@ -32,6 +32,8 @@ On Windows PowerShell, use `py` instead of `python` if that is how Python is ins
 
 The current release is a research prototype. The local checkpoint sandbox and replay pipeline are executable; the Docker sandbox, real model/provider integration, PostgreSQL adapter, frozen SWE-bench task manifest, and empirical Paper 1 datasets/results still need to be completed before final evaluation.
 
+The repository can now launch a frozen SWE-bench slice through the vendored mini-SWE-agent and import its trajectories into the VERITAS action schema. See `research/DATASETS.md`; benchmark execution remains opt-in because it can download large Docker images and incur model cost.
+
 The demo uses a local toy filesystem sandbox. It does not call provider models, Docker, or external services.
 
 ## Main Directories
