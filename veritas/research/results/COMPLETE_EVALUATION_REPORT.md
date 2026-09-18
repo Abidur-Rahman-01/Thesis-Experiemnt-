@@ -26,6 +26,15 @@ Furthermore, integrating deterministic **POPPER invariants**, **Reflexion counte
 | **DPO Preference Dataset (Paper 2)** | Outcome-Changing Branches | 148 recovery pairs | **CSO Harvester** | **148 Chosen/Rejected Pairs** in standard DPO JSONL | Ready for Hugging Face TRL | [`cso_preferences.jsonl`](file:///F:/Abidur%202110001/VERITAS/veritas/research/results/cso_preferences.jsonl) |
 | **Statistical Calibration** | Temperature Scaling | 84 adjudicated actions | **Temperature Scaling** | $\mathbf{\text{ECE} = 8.16\%}$ (Down from raw prior) | $\text{Brier} = 0.248, \text{NLL} = 0.689$ | [`calibration.json`](file:///F:/Abidur%202110001/VERITAS/veritas/research/results/calibration.json) |
 
+### Visual Figures & Empirical Output Curves
+All publication-grade output curves and diagrams have been rendered at 300 DPI (PNG & SVG):
+- **Master Overview**: [`veritas_master_output_dashboard.png`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/figures/veritas_master_output_dashboard.png)
+- **Figure 1 (Budget Tradeoff Curve)**: [`figure1_vov_budget_efficiency_curve.png`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/figures/figure1_vov_budget_efficiency_curve.png)
+- **Figure 2 (Calibration Reliability Diagram)**: [`figure2_calibration_reliability_curve.png`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/figures/figure2_calibration_reliability_curve.png)
+- **Figure 3 (Model Scaling Latency Curve)**: [`figure3_model_scaling_latency_curve.png`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/figures/figure3_model_scaling_latency_curve.png)
+- **Figure 4 (Security & Recovery Frontier)**: [`figure4_security_and_recovery_frontier.png`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/figures/figure4_security_and_recovery_frontier.png)
+- **Detailed Curves Analysis**: [`OUTPUT_CURVES_ANALYSIS.md`](file:///f:/Abidur%202110001/VERITAS/veritas/research/results/OUTPUT_CURVES_ANALYSIS.md)
+
 ---
 
 ## 2. In-Depth Empirical Findings
