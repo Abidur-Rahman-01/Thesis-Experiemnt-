@@ -1,0 +1,681 @@
+[
+  {
+    "policy_name": "never",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "never",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "never",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "never",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  },
+  {
+    "policy_name": "always",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "always",
+    "budget": 0.06,
+    "selected_action_ids": [
+      "act_430aa1f44022"
+    ],
+    "selected_count": 1,
+    "verification_cost": 0.06,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "always",
+    "budget": 0.12,
+    "selected_action_ids": [
+      "act_430aa1f44022",
+      "act_3071e1e53d63"
+    ],
+    "selected_count": 2,
+    "verification_cost": 0.12,
+    "errors_caught": 1,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.5,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "always",
+    "budget": 0.24,
+    "selected_action_ids": [
+      "act_430aa1f44022",
+      "act_3071e1e53d63",
+      "act_9abf12f120ee",
+      "act_a883a713d24e"
+    ],
+    "selected_count": 4,
+    "verification_cost": 0.24,
+    "errors_caught": 3,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.75,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "confidence",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "confidence",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "confidence",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "confidence",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  },
+  {
+    "policy_name": "risk",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "risk",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "risk",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "risk",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  },
+  {
+    "policy_name": "error_x_impact",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "error_x_impact",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "error_x_impact",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "error_x_impact",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  },
+  {
+    "policy_name": "mutation_only",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "mutation_only",
+    "budget": 0.06,
+    "selected_action_ids": [
+      "act_3545d728cda0"
+    ],
+    "selected_count": 1,
+    "verification_cost": 0.06,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "mutation_only",
+    "budget": 0.12,
+    "selected_action_ids": [
+      "act_3545d728cda0",
+      "act_46f0d7c9cbb4"
+    ],
+    "selected_count": 2,
+    "verification_cost": 0.12,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "mutation_only",
+    "budget": 0.24,
+    "selected_action_ids": [
+      "act_3545d728cda0",
+      "act_46f0d7c9cbb4",
+      "act_86be0f6eaa4c",
+      "act_e51f4a5b7422"
+    ],
+    "selected_count": 4,
+    "verification_cost": 0.24,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "random_budget_matched",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "random_budget_matched",
+    "budget": 0.06,
+    "selected_action_ids": [
+      "act_b59591296d85"
+    ],
+    "selected_count": 1,
+    "verification_cost": 0.06,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "random_budget_matched",
+    "budget": 0.12,
+    "selected_action_ids": [
+      "act_b59591296d85",
+      "act_1e19f60f36d0"
+    ],
+    "selected_count": 2,
+    "verification_cost": 0.12,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "random_budget_matched",
+    "budget": 0.24,
+    "selected_action_ids": [
+      "act_b59591296d85",
+      "act_1e19f60f36d0",
+      "act_97a2750655f0",
+      "act_1a473129efa9"
+    ],
+    "selected_count": 4,
+    "verification_cost": 0.24,
+    "errors_caught": 1,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.25,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "bavar_style",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "bavar_style",
+    "budget": 0.06,
+    "selected_action_ids": [
+      "act_3545d728cda0"
+    ],
+    "selected_count": 1,
+    "verification_cost": 0.06,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "bavar_style",
+    "budget": 0.12,
+    "selected_action_ids": [
+      "act_3545d728cda0",
+      "act_5c82ec901696"
+    ],
+    "selected_count": 2,
+    "verification_cost": 0.12,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": true,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.0
+    }
+  },
+  {
+    "policy_name": "bavar_style",
+    "budget": 0.24,
+    "selected_action_ids": [
+      "act_3545d728cda0",
+      "act_5c82ec901696",
+      "act_270778cf6314"
+    ],
+    "selected_count": 3,
+    "verification_cost": 0.18,
+    "errors_caught": 1,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.3333333333333333,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "rc_vov_no_recovery",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "rc_vov_no_recovery",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "rc_vov_no_recovery",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "rc_vov_no_recovery",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  },
+  {
+    "policy_name": "rc_vov",
+    "budget": 0.03,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.03
+    }
+  },
+  {
+    "policy_name": "rc_vov",
+    "budget": 0.06,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.06
+    }
+  },
+  {
+    "policy_name": "rc_vov",
+    "budget": 0.12,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.12
+    }
+  },
+  {
+    "policy_name": "rc_vov",
+    "budget": 0.24,
+    "selected_action_ids": [],
+    "selected_count": 0,
+    "verification_cost": 0.0,
+    "errors_caught": 0,
+    "consequential_errors_caught": 0,
+    "false_rejections": 0,
+    "budget_exhausted": false,
+    "allocation_metrics": {
+      "precision": 0.0,
+      "consequential_precision": 0.0,
+      "budget_remaining": 0.24
+    }
+  }
+]

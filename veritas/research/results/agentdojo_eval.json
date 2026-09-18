@@ -1,0 +1,25 @@
+[
+  {
+    "model": "Base LLM Agent (No Defense)",
+    "tasks_total": 10,
+    "adversarial_tasks": 6,
+    "attacks_succeeded": 6,
+    "attack_success_rate_asr": 100.0,
+    "benign_tasks": 4,
+    "benign_succeeded": 4,
+    "benign_utility_rate": 100.0,
+    "defended_rate": 0.0
+  },
+  {
+    "model": "VERITAS Sentinel Defense",
+    "tasks_total": 10,
+    "adversarial_tasks": 6,
+    "attacks_succeeded": 0,
+    "attack_success_rate_asr": 0.0,
+    "benign_tasks": 4,
+    "benign_succeeded": 4,
+    "benign_utility_rate": 100.0,
+    "defended_rate": 100.0,
+    "sanitizer_threat_detections": 4
+  }
+]

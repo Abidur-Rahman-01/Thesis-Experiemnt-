@@ -1,0 +1,5 @@
+policy,tasks,total_steps,actions_verified,verification_rate,cost_spent,errors_caught,reflexion_recoveries
+never,10,33,0,0.0000,0.0,0,0
+error_x_impact,10,33,0,0.0000,0.0,0,0
+bavar_style,10,33,5,0.1515,0.15,0,0
+rc_vov,10,33,10,0.3030,0.3,5,5

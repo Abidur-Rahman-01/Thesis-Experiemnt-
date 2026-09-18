@@ -1,0 +1,42 @@
+[
+  {
+    "scheduler": "never",
+    "tasks_evaluated": 10,
+    "total_reasoning_steps": 33,
+    "actions_verified": 0,
+    "verification_rate": 0.0,
+    "cost_spent": 0.0,
+    "errors_caught": 0,
+    "reflexion_recoveries": 0
+  },
+  {
+    "scheduler": "error_x_impact",
+    "tasks_evaluated": 10,
+    "total_reasoning_steps": 33,
+    "actions_verified": 0,
+    "verification_rate": 0.0,
+    "cost_spent": 0.0,
+    "errors_caught": 0,
+    "reflexion_recoveries": 0
+  },
+  {
+    "scheduler": "bavar_style",
+    "tasks_evaluated": 10,
+    "total_reasoning_steps": 33,
+    "actions_verified": 5,
+    "verification_rate": 0.15151515151515152,
+    "cost_spent": 0.15,
+    "errors_caught": 0,
+    "reflexion_recoveries": 0
+  },
+  {
+    "scheduler": "rc_vov",
+    "tasks_evaluated": 10,
+    "total_reasoning_steps": 33,
+    "actions_verified": 10,
+    "verification_rate": 0.30303030303030304,
+    "cost_spent": 0.3,
+    "errors_caught": 5,
+    "reflexion_recoveries": 5
+  }
+]

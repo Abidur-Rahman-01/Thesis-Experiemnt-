@@ -1,0 +1,44 @@
+[
+  {
+    "model": "llama3.2:3b",
+    "parameter_scale": "3B",
+    "problems_evaluated": 5,
+    "reasoning_accuracy_percent": 80.0,
+    "avg_generation_latency_ms": 3166.8,
+    "contract_structuring_latency_ms": 2359.3,
+    "valid_contract_produced": true,
+    "chosen_tool": "log_analyzer",
+    "chosen_operation": "scan",
+    "action_intent": "identify",
+    "error_risk_score": 0.05,
+    "risk_estimation_latency_ms": 2076.4
+  },
+  {
+    "model": "qwen2.5-coder:7b",
+    "parameter_scale": "7B",
+    "problems_evaluated": 5,
+    "reasoning_accuracy_percent": 100.0,
+    "avg_generation_latency_ms": 3970.6,
+    "contract_structuring_latency_ms": 2584.0,
+    "valid_contract_produced": true,
+    "chosen_tool": "log_analysis",
+    "chosen_operation": "search",
+    "action_intent": "Identify any unauthorized access attempts related to CVE-2024 in application logs.",
+    "error_risk_score": 0.01,
+    "risk_estimation_latency_ms": 2116.5
+  },
+  {
+    "model": "qwen2.5-coder:14b",
+    "parameter_scale": "14B",
+    "problems_evaluated": 5,
+    "reasoning_accuracy_percent": 100.0,
+    "avg_generation_latency_ms": 6474.1,
+    "contract_structuring_latency_ms": 3001.4,
+    "valid_contract_produced": true,
+    "chosen_tool": "LogAnalyzer",
+    "chosen_operation": "search",
+    "action_intent": "Identify sessions with CVE-2024 unauthorized access attempts",
+    "error_risk_score": 0.1,
+    "risk_estimation_latency_ms": 2192.0
+  }
+]

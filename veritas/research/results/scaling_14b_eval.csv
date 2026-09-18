@@ -1,0 +1,4 @@
+model,parameter_scale,accuracy_percent,gen_latency_ms,structuring_latency_ms,valid_contract,chosen_tool,error_risk_score
+llama3.2:3b,3B,80.0,3166.8,2359.3,True,log_analyzer,0.05
+qwen2.5-coder:7b,7B,100.0,3970.6,2584.0,True,log_analysis,0.01
+qwen2.5-coder:14b,14B,100.0,6474.1,3001.4,True,LogAnalyzer,0.1

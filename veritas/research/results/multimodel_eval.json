@@ -1,0 +1,38 @@
+[
+  {
+    "model": "qwen2.5-coder:7b",
+    "problems_evaluated": 5,
+    "reasoning_accuracy": 40.0,
+    "avg_generation_latency_ms": 4292.1,
+    "contract_structuring_latency_ms": 2473.0,
+    "valid_contract_produced": true,
+    "action_tool_chosen": "database_query",
+    "action_intent": "Identify expired user tokens for cleanup",
+    "error_estimation_score": 0.01,
+    "estimation_latency_ms": 2124.8
+  },
+  {
+    "model": "llama3.2:3b",
+    "problems_evaluated": 5,
+    "reasoning_accuracy": 60.0,
+    "avg_generation_latency_ms": 2782.2,
+    "contract_structuring_latency_ms": 2204.2,
+    "valid_contract_produced": true,
+    "action_tool_chosen": "database",
+    "action_intent": "maintenance",
+    "error_estimation_score": 0.2,
+    "estimation_latency_ms": 2104.8
+  },
+  {
+    "model": "deepseek-r1:7b",
+    "problems_evaluated": 5,
+    "reasoning_accuracy": 0.0,
+    "avg_generation_latency_ms": 4741.5,
+    "contract_structuring_latency_ms": 4809.9,
+    "valid_contract_produced": true,
+    "action_tool_chosen": "database_query_tool",
+    "action_intent": "Clean the database by removing expired tokens",
+    "error_estimation_score": 0.2,
+    "estimation_latency_ms": 7882.1
+  }
+]

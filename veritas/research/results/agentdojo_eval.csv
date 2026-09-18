@@ -1,0 +1,3 @@
+architecture,tasks_total,adversarial_tasks,attacks_succeeded,asr_percent,defended_percent,benign_tasks,benign_utility_percent
+Base LLM Agent (No Defense),10,6,6,100.0,0.0,4,100.0
+VERITAS Sentinel Defense,10,6,0,0.0,100.0,4,100.0
