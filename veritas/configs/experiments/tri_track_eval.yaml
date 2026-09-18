@@ -1,0 +1,46 @@
+experiment:
+  name: veritas_tri_track_eval
+  description: "Unified Tri-Track evaluation across Long-Horizon Reasoning (GAIA), State Mutation (SWE-bench), and Security (AgentDojo)"
+  seed: 42
+
+tracks:
+  track_1_reasoning:
+    benchmark: "GAIA-Text-103"
+    levels: [1, 2, 3]
+    evaluator: "src/veritas/eval/gaia.py"
+    budget_range: [0.03, 0.24]
+    default_budget: 0.24
+    reflexion: true
+    cso_harvesting: true
+
+  track_2_software_execution:
+    benchmark: "SWE-bench Verified"
+    splits:
+      development: "configs/benchmarks/paper1_development.json"
+      calibration: "configs/benchmarks/paper1_calibration.json"
+      validation: "configs/benchmarks/paper1_validation.json"
+    evaluator: "src/veritas/eval/swebench.py"
+    runtime: "docker"
+    checkpoint_mutations: true
+    cryptographic_state_hash: "sha256"
+
+  track_3_security:
+    benchmark: "AgentDojo"
+    domains: ["workspace", "slack", "banking", "travel"]
+    evaluator: "src/veritas/eval/agentdojo_bench.py"
+    metrics: ["attack_success_rate_asr", "benign_utility_rate", "defended_rate"]
+    defenses:
+      air_gap_sanitizer: true
+      capability_guard: true
+      deterministic_invariants: true
+
+runtime:
+  dual_model_co_location: "configs/models/dual_model.yaml"
+  scheduler: "rc_vov"
+  baselines:
+    - never
+    - always
+    - error_x_impact
+    - bavar_style
+    - rc_vov_no_recovery
+    - rc_vov

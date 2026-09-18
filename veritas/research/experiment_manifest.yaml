@@ -3,11 +3,12 @@ experiment:
   source_blueprint: ../VERITAS_updated_research_blueprint.md
   primary_replay_metric: consequential_errors_caught_at_fixed_verification_cost
   primary_online_metric: paired_task_utility_and_verification_cost
-  final_test_status: not_started
-  frozen: false
+  final_test_status: ready_for_online_eval
+  frozen: true
 
 artifacts:
-  action_log: research/results/actions.jsonl
-  replay_results: research/results/replay_results.json
+  action_log: research/results/actions.scored.jsonl
+  replay_results: research/results/replay_sweep.json
+  replay_csv: research/results/replay_sweep.csv
   calibration_report: research/results/calibration.json
   recovery_report: research/results/recovery.json

@@ -1,0 +1,27 @@
+dual_model:
+  sentinel:
+    model: "Qwen/Qwen2.5-3B-Instruct"
+    provider: "local_ollama"
+    role: "low_latency_sanitization_and_calibration"
+    latency_sla_ms: 120
+    quantization: "4bit"
+    temperature: 0.0
+    responsibilities:
+      - "air_gap_observation_sanitization"
+      - "indirect_prompt_injection_detection"
+      - "confidence_error_calibration"
+      - "precondition_syntax_verification"
+
+  workhorse_policy:
+    model: "qwen2.5-coder:7b"
+    provider: "ollama"
+    endpoint: "http://localhost:11434"
+    role: "action_contract_generation_and_reasoning"
+    temperature: 0.0
+    top_p: 1.0
+    context_window: 32768
+    responsibilities:
+      - "multi_step_reasoning"
+      - "code_generation_and_patching"
+      - "reflexion_replanning"
+      - "cso_counterfactual_branch_exploration"

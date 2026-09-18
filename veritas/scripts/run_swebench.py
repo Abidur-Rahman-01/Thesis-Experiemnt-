@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import os
 import shlex
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -35,6 +36,20 @@ def main() -> None:
         return
 
     env = os.environ.copy()
+    docker_bin = shutil.which("docker.exe", path=env.get("PATH")) or shutil.which("docker", path=env.get("PATH"))
+    if not docker_bin:
+        docker_candidates = [
+            Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "DockerDesktop" / "resources" / "bin" / "docker.exe",
+            Path(r"C:\Program Files\Docker\Docker\resources\bin\docker.exe"),
+        ]
+        for candidate in docker_candidates:
+            if candidate.exists():
+                docker_bin = str(candidate)
+                env["PATH"] = str(candidate.parent) + os.pathsep + env.get("PATH", "")
+                break
+    if docker_bin:
+        env.setdefault("MSWEA_DOCKER_EXECUTABLE", docker_bin)
+    env.setdefault("MSWEA_COST_TRACKING", "ignore_errors")
     mini_src = str((args.mini_swe_root / "src").resolve())
     env["PYTHONPATH"] = os.pathsep.join(filter(None, (mini_src, env.get("PYTHONPATH", ""))))
     subprocess.run(command, env=env, check=True)

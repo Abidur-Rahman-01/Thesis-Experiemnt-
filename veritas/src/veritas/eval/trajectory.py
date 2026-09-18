@@ -9,6 +9,7 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
+from veritas.actions.classes import ActionClass
 from veritas.actions.contracts import ActionContract, Provenance
 
 
@@ -131,6 +132,8 @@ def import_miniswe_trajectory(path: str | Path) -> list[dict[str, Any]]:
             )
             if contract.mutates_state:
                 contract = replace(contract, permissions_required=("workspace:read", "workspace:write"))
+            if contract.action_class is ActionClass.DESTRUCTIVE_FILESYSTEM:
+                contract = replace(contract, reversible=False)
             records.append(
                 {
                     "record_schema": "veritas.action.v1",

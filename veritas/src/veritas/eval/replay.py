@@ -65,7 +65,9 @@ class ReplayEngine:
             verdict = str(record.get("verifier_verdict", "pass"))
             if label == "error" and verdict in {"fail", "uncertain"}:
                 errors_caught += 1
-                if float(record.get("impact", 0.0)) >= self.consequential_impact_threshold:
+                impact = record.get("impact")
+                impact_val = float(impact) if impact is not None else 0.0
+                if impact_val >= self.consequential_impact_threshold:
                     consequential_errors_caught += 1
             if label == "correct" and verdict == "fail":
                 false_rejections += 1

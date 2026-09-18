@@ -1,0 +1,12 @@
+policy_14b:
+  provider: "ollama"
+  model: "qwen2.5-coder:14b"
+  parameters: "14.7B"
+  context_window: 32768
+  quantization: "Q4_K_M"
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+  vram_footprint_gb: 9.0
+  target_gpu: "NVIDIA GeForce RTX 5080 (16GB VRAM)"
+  role: "primary_workhorse_policy"

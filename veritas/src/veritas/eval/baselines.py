@@ -22,8 +22,26 @@ class Scheduler(Protocol):
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision: ...
 
 
+def _get_float(record: dict, key: str, default: float = 0.0) -> float:
+    val = record.get(key)
+    if val is None:
+        return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+
 def record_cost(record: dict) -> float:
-    return float(record.get("estimated_cost", record.get("verification_cost", 0.03)))
+    cost = record.get("estimated_cost")
+    if cost is None:
+        cost = record.get("verification_cost")
+    if cost is None:
+        cost = 0.03
+    try:
+        return float(cost)
+    except (ValueError, TypeError):
+        return 0.03
 
 
 def can_afford(record: dict, remaining_budget: float) -> bool:
@@ -52,7 +70,7 @@ class ConfidenceScheduler:
     name: str = "confidence"
 
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision:
-        score = float(record.get("calibrated_error_probability", 0.0))
+        score = _get_float(record, "calibrated_error_probability", 0.0)
         return SchedulerDecision(score >= self.threshold and can_afford(record, remaining_budget), "p_error_threshold", score)
 
 
@@ -62,7 +80,7 @@ class RiskScheduler:
     name: str = "risk"
 
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision:
-        score = float(record.get("impact", 0.0))
+        score = _get_float(record, "impact", 0.0)
         return SchedulerDecision(score >= self.threshold and can_afford(record, remaining_budget), "impact_threshold", score)
 
 
@@ -72,7 +90,7 @@ class ErrorImpactScheduler:
     name: str = "error_x_impact"
 
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision:
-        score = float(record.get("calibrated_error_probability", 0.0)) * float(record.get("impact", 0.0))
+        score = _get_float(record, "calibrated_error_probability", 0.0) * _get_float(record, "impact", 0.0)
         return SchedulerDecision(score >= self.threshold and can_afford(record, remaining_budget), "p_error_x_impact", score)
 
 
@@ -110,9 +128,9 @@ class BavarStyleScheduler:
     name: str = "bavar_style"
 
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision:
-        reliability = float(record.get("detection_rate_estimate", 0.5)) * (1.0 - float(record.get("false_positive_rate_estimate", 0.1)))
-        criticality = float(record.get("impact", 0.0))
-        uncertainty = float(record.get("calibrated_error_probability", 0.0))
+        reliability = _get_float(record, "detection_rate_estimate", 0.5) * (1.0 - _get_float(record, "false_positive_rate_estimate", 0.1))
+        criticality = _get_float(record, "impact", 0.0)
+        uncertainty = _get_float(record, "calibrated_error_probability", 0.0)
         budget_pressure = 1.0 if total_budget <= 0 else max(0.0, remaining_budget / total_budget)
         score = uncertainty * criticality * reliability * budget_pressure / max(record_cost(record), 1e-9)
         return SchedulerDecision(score >= self.threshold and can_afford(record, remaining_budget), "bavar_style_expected_value", score)
@@ -125,16 +143,16 @@ class RCVOVScheduler:
     name: str = "rc_vov"
 
     def select(self, record: dict, *, remaining_budget: float, total_budget: float) -> SchedulerDecision:
-        rho = float(record.get("residual_loss_after_recovery", 0.5)) if self.include_recovery else 0.5
+        rho = _get_float(record, "residual_loss_after_recovery", 0.5) if self.include_recovery else 0.5
         vov = compute_vov(
             VovInputs(
-                p_error=float(record.get("calibrated_error_probability", 0.0)),
-                impact=float(record.get("impact", 0.0)),
-                detection_rate=float(record.get("detection_rate_estimate", 0.5)),
-                false_positive_rate=float(record.get("false_positive_rate_estimate", 0.1)),
+                p_error=_get_float(record, "calibrated_error_probability", 0.0),
+                impact=_get_float(record, "impact", 0.0),
+                detection_rate=_get_float(record, "detection_rate_estimate", 0.5),
+                false_positive_rate=_get_float(record, "false_positive_rate_estimate", 0.1),
                 residual_loss_after_recovery=rho,
                 verification_cost=record_cost(record),
-                false_positive_cost=float(record.get("false_positive_cost", 0.1)),
+                false_positive_cost=_get_float(record, "false_positive_cost", 0.1),
             )
         )
         decision = self.controller.choose(

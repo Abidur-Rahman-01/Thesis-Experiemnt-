@@ -1,0 +1,34 @@
+dual_model_14b:
+  sentinel:
+    model: "llama3.2:3b"
+    provider: "local_ollama"
+    role: "low_latency_sanitization_and_calibration"
+    latency_sla_ms: 100
+    vram_footprint_gb: 2.0
+    responsibilities:
+      - "air_gap_observation_sanitization"
+      - "indirect_prompt_injection_detection"
+      - "confidence_error_calibration"
+      - "precondition_syntax_verification"
+
+  workhorse_policy:
+    model: "qwen2.5-coder:14b"
+    provider: "ollama"
+    parameters: "14.7B"
+    endpoint: "http://localhost:11434"
+    role: "action_contract_generation_and_deep_reasoning"
+    vram_footprint_gb: 9.0
+    temperature: 0.0
+    top_p: 1.0
+    context_window: 32768
+    responsibilities:
+      - "long_horizon_multi_step_reasoning"
+      - "complex_code_synthesis_and_patching"
+      - "reflexion_replanning"
+      - "cso_counterfactual_branch_exploration"
+
+hardware_allocation:
+  gpu: "NVIDIA GeForce RTX 5080"
+  total_vram_gb: 16.0
+  allocated_vram_gb: 11.0 # 2.0 GB (Sentinel) + 9.0 GB (14B Workhorse)
+  free_headroom_gb: 5.0
